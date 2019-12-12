@@ -422,7 +422,7 @@ Export is done in a buffer named \"*Org S9Y Export*\"."
 ;;;###autoload
 (defun org-s9y-export-to-html
   (&optional async subtreep visible-only body-only ext-plist)
-  "Export current buffer to an Serendipity HTML file.
+  "Export current buffer to a Serendipity HTML file.
 
 If narrowing is active in the current buffer, only export its
 narrowed part.
