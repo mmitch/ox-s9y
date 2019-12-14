@@ -1,7 +1,7 @@
 ox-s9y - Serendipity blog export for Org
 ========================================
 
-[![Build Status](https://travis-ci.org/mmitch/ox-s9y.svg?branch=master)](https://travis-ci.org/mmitch/ox-s9y)
+[![Build Status](https://img.shields.io/circleci/build/gh/mmitch/ox-s9y?label=build)](https://circleci.com/gh/mmitch/ox-s9y)
 [![GPL 3+](https://img.shields.io/badge/license-GPL%203%2B-blue.svg)](http://www.gnu.org/licenses/gpl-3.0-standalone.html)
 
 
