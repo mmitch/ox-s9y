@@ -1,27 +1,47 @@
 version: 2
 jobs:
 
-  emacs_26: 
+  emacs_26:
     docker:
       - image: silex/emacs:26
     steps:
       - checkout
-      - run: emacs --version
-      - run: emacs -Q --batch -f org-version
-      - run: emacs -Q --batch -f batch-byte-compile ox-s9y.el
-      - run: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/unit-test-ox-s9y.el -f ert-run-tests-batch-and-exit
-      - run: ./run-tests.sh ox-s9y.el
+      - run:
+          name: Log Emacs Version
+          command: emacs --version
+      - run:
+          name: Log Org Version
+          command: emacs -Q --batch -f org-version
+      - run:
+          name: Byte compilation
+          command: emacs -Q --batch -f batch-byte-compile ox-s9y.el
+      - run:
+          name: Unit tests
+          command: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/unit-test-ox-s9y.el -f ert-run-tests-batch-and-exit
+      - run:
+          name: Integration tests
+          command: ./run-tests.sh ox-s9y.el
 
-  emacs_25: 
+  emacs_25:
     docker:
       - image: silex/emacs:25
     steps:
       - checkout
-      - run: emacs --version
-      - run: emacs -Q --batch -f org-version
-      - run: emacs -Q --batch -f batch-byte-compile ox-s9y.el
-      - run: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/unit-test-ox-s9y.el -f ert-run-tests-batch-and-exit
-      - run: ./run-tests.sh ox-s9y.el
+      - run:
+          name: Log Emacs version
+          command: emacs --version
+      - run:
+          name: Log Org version
+          command: emacs -Q --batch -f org-version
+      - run:
+          name: Byte compilation
+          command: emacs -Q --batch -f batch-byte-compile ox-s9y.el
+      - run:
+          name: Unit tests
+          command: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/unit-test-ox-s9y.el -f ert-run-tests-batch-and-exit
+      - run:
+          name: Integration tests
+          command: ./run-tests.sh ox-s9y.el
 
 workflows:
   version: 2
