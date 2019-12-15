@@ -45,7 +45,18 @@ jobs:
 
 workflows:
   version: 2
-  emacs_25_and_26:
+  commit:
+    jobs:
+      - emacs_25
+      - emacs_26
+  monthly:
+    triggers:
+      - schedule:
+          cron: "42 23 6 * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - emacs_25
       - emacs_26
