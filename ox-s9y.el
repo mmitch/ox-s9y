@@ -149,6 +149,7 @@ set on the <a> tag."
   (cond ((string= language "elisp") "lisp")
 	((string= language "shell") "bash")
 	((string= language "sh")    "bash")
+	((string= language "conf")  "ini")
 	((string= language "") "plaintext")
 	(language)
 	(t "plaintext")))
