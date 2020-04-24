@@ -372,20 +372,6 @@ CONTENTS is the contents of the section, as a string.  INFO is a
   plist used as a communication channel."
   (org-trim contents))
 
-(defun org-s9y-special-block (special-block contents _info)
-  "Transcode a SPECIAL-BLOCK element from Org to Serendipity.
-CONTENTS holds the contents of the block.  INFO is a plist
-holding contextual information."
-  (let ((type (downcase (org-element-property :type special-block))))
-    (pcase type
-      ("detail" (if (string-match-p "</summary>\n" contents)
-		    (org-s9y--put-in-tag
-		     "detail" ; move <summary>...</summary> out of the <p>...</p>
-		     (concat (replace-regexp-in-string "</summary>\n" "</summary>\n<p>" contents) "</p>"))
-		  (org-s9y--put-in-tag "detail" (org-s9y--put-in-tag "p" contents))))
-      ("summary" (org-s9y--put-in-tag "summary" contents))
-      (other (error "SPECIAL-BLOCK type `%s' not yet supported" other)))))
-
 (defun org-s9y-strike-through (_strike-through contents _info)
   "Transcode a STRIKE-THROUGH element from Org to Serendipity.
 CONTENTS is the text with strike-through markup, as a string.
