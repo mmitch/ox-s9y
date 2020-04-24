@@ -1,4 +1,4 @@
-<detail><summary>short text
-</summary>
-<p>long text
-</p></detail>
+<detail>
+<summary>title</summary>
+<p>content</p>
+</detail>

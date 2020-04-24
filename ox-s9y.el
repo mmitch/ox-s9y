@@ -28,6 +28,7 @@
 ;;; Code:
 
 (require 'ox)
+(require 'seq)
 
 ;;; Backend definition
 
@@ -66,7 +67,7 @@
     (quote-block . org-s9y-quote-block)
     (radio-target . org-s9y-undefined)
     (section . org-s9y-section)
-    (special-block . org-s9y-special-block)
+    (special-block . org-s9y-undefined)
     (src-block . org-s9y-geshi-block)
     (statistics-cookie . org-s9y-undefined)
     (strike-through . org-s9y-strike-through)
@@ -246,15 +247,22 @@ INFO is a plist used as a communication channel."
 CONTENTS is the headline contents.  INFO is a plist used as
 a communication channel."
   (let ((title (org-export-data (org-element-property :title headline) info))
-	(level (org-export-get-relative-level headline info)))
-    (if (org-element-property :footnote-section-p headline)
-	""
-      (concat
-       (if (<= level 2)
-	   (format "<!--  %s  -->" title)
-	 (org-s9y--put-in-tag (format "h%d" level) title))
-       "\n"
-       contents))))
+	(level (org-export-get-relative-level headline info))
+	(is-detail (and (plist-get info :with-tags)
+			(seq-contains (org-export-get-tags headline info) "detail")))
+	(is-footnotes (org-element-property :footnote-section-p headline)))
+    (cond
+     (is-detail (let ((summary (if title
+				   (concat (org-s9y--put-in-tag "summary" title) "\n")
+				 "")))
+		  (org-s9y--put-in-tag "detail" (concat "\n" summary contents))))
+     (is-footnotes "")
+     (t (concat
+	 (if (<= level 2)
+	     (format "<!--  %s  -->" title)
+	   (org-s9y--put-in-tag (format "h%d" level) title))
+	 "\n"
+	 contents)))))
 
 (defun org-s9y-inner-template (contents info)
   "Return body of document string after Serendipity conversion.
