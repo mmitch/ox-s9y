@@ -1,0 +1,61 @@
+#+TITLE: examples of ox-s9y usage
+
+* basic formatting
+
+Most normal Org formatting like *bold* =code= /italic/ +striketrough+
+_underline_ as well as sections and headlines should work out of the box.
+
+Unimplemented element types should throw an error pointing to their
+missing implementation.
+
+* source code blocks
+
+Source code using =#+BEGIN_SRC= / =#+END_SRC= will be rendered as a
+=[geshi]= code block.
+
+The source language will be copied to the geshi tag.  Some mappings
+are needed, see =(org-s9y--map-to-geshi-language)= and expand
+accordingly if you miss anything.
+
+** input
+
+#+INCLUDE: "testing/test-geshi-block.input" src org
+
+** output
+
+#+INCLUDE: "testing/test-geshi-block.output" src html
+
+* foldable =<detail>= blocks
+
+Use a headline tagged with =:detail:= to generate a foldable HTML
+=<detail>= block.  The =<detail>= is closed by default.  The headline
+title will be used as a =<summary>= and can contain markup.
+
+=<detail>= blocks may be nested.
+
+The =<detail>= block will end at the next headline of the same or
+higher leven.  To end the block early, insert a special headline with
+the title =END= (also tagged as =:detail:=).  While this will end the
+=<detail>= block, the =END= headline will not show up in the output.
+
+** input
+
+#+INCLUDE: "testing/test-detail-complex.input" src org
+
+** output
+
+#+INCLUDE: "testing/test-detail-complex.output" src html
+
+* block quotes
+
+Quote blocks using =#+BEGIN_QUOTE= / =#+END_QUOTE= will be rendered as
+an HTML =<blockquote>= tag.
+
+** input
+
+#+INCLUDE: "testing/test-quote-block.input" src org
+
+** output
+
+#+INCLUDE: "testing/test-quote-block.output" src html
+
