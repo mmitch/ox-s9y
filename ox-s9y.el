@@ -28,7 +28,6 @@
 ;;; Code:
 
 (require 'ox)
-(require 'seq)
 
 ;;; Backend definition
 
@@ -249,7 +248,7 @@ a communication channel."
   (let* ((title (org-export-data (org-element-property :title headline) info))
 	 (level (org-export-get-relative-level headline info))
 	 (is-detail (and (plist-get info :with-tags)
-			 (seq-contains (org-export-get-tags headline info) "detail")))
+			 (member "detail" (org-export-get-tags headline info))))
 	 (is-skip (string= "END" title))
 	 (is-footnotes (org-element-property :footnote-section-p headline)))
     (cond
