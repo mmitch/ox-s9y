@@ -125,6 +125,16 @@ this the hard way."
       (substring url 1)
     url))
 
+(defun org-s9y--map-to-geshi-language (language)
+  "Map LANGUAGE from Org to Geshi."
+  (cond ((string= language "elisp") "lisp")
+	((string= language "shell") "bash")
+	((string= language "sh")    "bash")
+	((string= language "conf")  "ini")
+	((string= language "") "plaintext")
+	(language)
+	(t "plaintext")))
+
 (defun org-s9y--put-a-href (contents href &optional class id)
   "Puts the CONTENTS inside a simple <a> tag pointing to HREF.
 Automagically escapes the target URL.  An optional CLASS and ID can be
@@ -144,16 +154,6 @@ set on the <a> tag."
 (defun org-s9y--remove-trailing-newline (text)
   "Remove the trailing newline from TEXT."
   (replace-regexp-in-string "\n\\'" "" text))
-
-(defun org-s9y--map-to-geshi-language (language)
-  "Map LANGUAGE from Org to Geshi."
-  (cond ((string= language "elisp") "lisp")
-	((string= language "shell") "bash")
-	((string= language "sh")    "bash")
-	((string= language "conf")  "ini")
-	((string= language "") "plaintext")
-	(language)
-	(t "plaintext")))
 
 ;;; Backend callbacks
 
