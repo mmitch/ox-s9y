@@ -247,17 +247,17 @@ CONTENTS is the headline contents.  INFO is a plist used as
 a communication channel."
   (let* ((title (org-export-data (org-element-property :title headline) info))
 	 (level (org-export-get-relative-level headline info))
-	 (is-detail (and (plist-get info :with-tags)
-			 (member "detail" (org-export-get-tags headline info))))
+	 (is-details (and (plist-get info :with-tags)
+			  (member "details" (org-export-get-tags headline info))))
 	 (is-skip (string= "END" title))
 	 (is-footnotes (org-element-property :footnote-section-p headline)))
     (cond
-     (is-detail (if is-skip
+     (is-details (if is-skip
 		    contents
 		  (let ((summary (if title
 				     (concat (org-s9y--put-in-tag "summary" title) "\n")
 				   "")))
-		    (org-s9y--put-in-tag "detail" (concat "\n" summary contents)))))
+		    (org-s9y--put-in-tag "details" (concat "\n" summary contents)))))
      (is-footnotes "")
      (t (concat
 	 (if (<= level 2)

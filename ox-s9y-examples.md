@@ -1,17 +1,17 @@
-- [basic formatting](#org88ec8b9)
-- [source code blocks](#org8f8b4d2)
-  - [input](#orge60f84c)
-  - [output](#org2bbbc13)
-- [foldable `<detail>` blocks](#org3b1e91a)
-  - [input](#org04d9a7c)
-  - [output](#org42c4ded)
-- [block quotes](#org83dc9ca)
-  - [input](#orga9e8990)
-  - [output](#orgadd8a9c)
+- [basic formatting](#orgf3787fc)
+- [source code blocks](#org34761b3)
+  - [input](#orgfb8db79)
+  - [output](#org82cc3fe)
+- [foldable `<details>` blocks](#orgb3cf537)
+  - [input](#org055e369)
+  - [output](#org3e334d8)
+- [block quotes](#orgd9525be)
+  - [input](#orga018df7)
+  - [output](#org7e98cbc)
 
 
 
-<a id="org88ec8b9"></a>
+<a id="orgf3787fc"></a>
 
 # basic formatting
 
@@ -20,7 +20,7 @@ Most normal Org formatting like **bold** `code` *italic* ~~striketrough~~ <span 
 Unimplemented element types should throw an error pointing to their missing implementation.
 
 
-<a id="org8f8b4d2"></a>
+<a id="org34761b3"></a>
 
 # source code blocks
 
@@ -29,7 +29,7 @@ Source code using `#+BEGIN_SRC` / `#+END_SRC` will be rendered as a `[geshi]` co
 The source language will be copied to the geshi tag. Some mappings are needed, see `(org-s9y--map-to-geshi-language)` and expand accordingly if you miss anything.
 
 
-<a id="orge60f84c"></a>
+<a id="orgfb8db79"></a>
 
 ## input
 
@@ -41,7 +41,7 @@ package foo;
 ```
 
 
-<a id="org2bbbc13"></a>
+<a id="org82cc3fe"></a>
 
 ## output
 
@@ -51,25 +51,25 @@ package foo;
 ```
 
 
-<a id="org3b1e91a"></a>
+<a id="orgb3cf537"></a>
 
-# foldable `<detail>` blocks
+# foldable `<details>` blocks
 
-Use a headline tagged with `:detail:` to generate a foldable HTML `<detail>` block. The `<detail>` is closed by default. The headline title will be used as a `<summary>` and can contain markup.
+Use a headline tagged with `:details:` to generate a foldable HTML `<details>` block. The `<details>` is closed by default. The headline title will be used as a `<summary>` and can contain markup.
 
-`<detail>` blocks may be nested.
+`<details>` blocks may be nested.
 
-The `<detail>` block will end at the next headline of the same or higher leven. To end the block early, insert a special headline with the title `END` (also tagged as `:detail:`). While this will end the `<detail>` block, the `END` headline will not show up in the output.
+The `<details>` block will end at the next headline of the same or higher level. To end the block early, insert a special headline with the title `END` (also tagged as `:details:`). While this will end the `<details>` block, the `END` headline will not show up in the output.
 
 
-<a id="org04d9a7c"></a>
+<a id="org055e369"></a>
 
 ## input
 
 ```org
 introduction paragraph
 
-* plain *bold* /italic/ _underline_ +strike+                         :detail:
+* plain *bold* /italic/ _underline_ +strike+                        :details:
 paragraph =one=
 
 #+BEGIN_SRC shell
@@ -78,20 +78,20 @@ echo formatted code
 #+END_SRC
 
 paragraph =two=
-* END :detail:
+* END                                                               :details:
 
 footer paragraph
 ```
 
 
-<a id="org42c4ded"></a>
+<a id="org3e334d8"></a>
 
 ## output
 
 ```html
 <p>introduction paragraph</p>
 
-<detail>
+<details>
 <summary>plain <strong>bold</strong> <em>italic</em> <u>underline</u> <s>strike</s></summary>
 <p>paragraph <code>one</code></p>
 
@@ -99,19 +99,19 @@ footer paragraph
 echo formatted code[/geshi]
 
 <p>paragraph <code>two</code></p>
-</detail>
+</details>
 <p>footer paragraph</p>
 ```
 
 
-<a id="org83dc9ca"></a>
+<a id="orgd9525be"></a>
 
 # block quotes
 
 Quote blocks using `#+BEGIN_QUOTE` / `#+END_QUOTE` will be rendered as an HTML `<blockquote>` tag.
 
 
-<a id="orga9e8990"></a>
+<a id="orga018df7"></a>
 
 ## input
 
@@ -124,7 +124,7 @@ this.
 ```
 
 
-<a id="orgadd8a9c"></a>
+<a id="org7e98cbc"></a>
 
 ## output
 

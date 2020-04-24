@@ -25,26 +25,26 @@ accordingly if you miss anything.
 
 #+INCLUDE: "testing/test-geshi-block.output" src html
 
-* foldable =<detail>= blocks
+* foldable =<details>= blocks
 
-Use a headline tagged with =:detail:= to generate a foldable HTML
-=<detail>= block.  The =<detail>= is closed by default.  The headline
-title will be used as a =<summary>= and can contain markup.
+Use a headline tagged with =:details:= to generate a foldable HTML
+=<details>= block.  The =<details>= is closed by default.  The
+headline title will be used as a =<summary>= and can contain markup.
 
-=<detail>= blocks may be nested.
+=<details>= blocks may be nested.
 
-The =<detail>= block will end at the next headline of the same or
-higher leven.  To end the block early, insert a special headline with
-the title =END= (also tagged as =:detail:=).  While this will end the
-=<detail>= block, the =END= headline will not show up in the output.
+The =<details>= block will end at the next headline of the same or
+higher level.  To end the block early, insert a special headline with
+the title =END= (also tagged as =:details:=).  While this will end the
+=<details>= block, the =END= headline will not show up in the output.
 
 ** input
 
-#+INCLUDE: "testing/test-detail-complex.input" src org
+#+INCLUDE: "testing/test-details-complex.input" src org
 
 ** output
 
-#+INCLUDE: "testing/test-detail-complex.output" src html
+#+INCLUDE: "testing/test-details-complex.output" src html
 
 * block quotes
 

@@ -1,14 +1,14 @@
 <p>preface</p>
 
-<detail>
+<details>
 <summary>outer</summary>
 <p>text 1</p>
 
-<detail>
+<details>
 <summary>inner</summary>
 <p><strong>inner</strong> <code>text</code></p>
-</detail>
+</details>
 <p>text 2</p>
-</detail>
+</details>
 
 <p>footer</p>

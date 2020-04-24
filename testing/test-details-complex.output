@@ -1,6 +1,6 @@
 <p>introduction paragraph</p>
 
-<detail>
+<details>
 <summary>plain <strong>bold</strong> <em>italic</em> <u>underline</u> <s>strike</s></summary>
 <p>paragraph <code>one</code></p>
 
@@ -8,5 +8,5 @@
 echo formatted code[/geshi]
 
 <p>paragraph <code>two</code></p>
-</detail>
+</details>
 <p>footer paragraph</p>

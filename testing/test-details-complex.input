@@ -1,0 +1,14 @@
+introduction paragraph
+
+* plain *bold* /italic/ _underline_ +strike+                        :details:
+paragraph =one=
+
+#+BEGIN_SRC shell
+#!/bin/sh
+echo formatted code
+#+END_SRC
+
+paragraph =two=
+* END                                                               :details:
+
+footer paragraph
