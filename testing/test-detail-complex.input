@@ -1,7 +1,7 @@
 introduction paragraph
 
 * plain *bold* /italic/ _underline_ +strike+                         :detail:
-parapgraph =one=
+paragraph =one=
 
 #+BEGIN_SRC shell
 #!/bin/sh

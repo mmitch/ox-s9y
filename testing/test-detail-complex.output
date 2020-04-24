@@ -2,7 +2,7 @@
 
 <detail>
 <summary>plain <strong>bold</strong> <em>italic</em> <u>underline</u> <s>strike</s></summary>
-<p>parapgraph <code>one</code></p>
+<p>paragraph <code>one</code></p>
 
 [geshi lang=bash]#!/bin/sh
 echo formatted code[/geshi]
