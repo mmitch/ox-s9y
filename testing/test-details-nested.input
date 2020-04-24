@@ -1,0 +1,15 @@
+preface
+
+* outer                                                             :details:
+
+text 1
+
+** inner                                                            :details:
+*inner* =text=
+** END                                                              :details:
+
+text 2
+
+* END                                                               :details:
+
+footer
