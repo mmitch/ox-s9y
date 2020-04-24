@@ -1,0 +1,14 @@
+<p>introduction paragraph</p>
+
+<detail><summary>plain <strong>bold</strong> <em>italic</em> <u>underline</u> <s>strike</s>
+</summary>
+<p>long text
+<p>parapgraph <code>one</code></p>
+
+[geshi lang=bash]#!/bin/sh
+echo formatted code[/geshi]
+
+<p>parapgraph <code>two</code>
+</p></detail>
+
+<p>final paragraph</p>

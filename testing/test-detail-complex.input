@@ -1,0 +1,17 @@
+introduction paragraph
+
+#+begin_detail
+#+begin_summary
+plain *bold* /italic/ _underline_ +strike+
+#+end_summary
+parapgraph =one=
+
+#+BEGIN_SRC shell
+#!/bin/sh
+echo formatted code
+#+END_SRC
+
+parapgraph =two=
+#+end_detail
+
+final paragraph
