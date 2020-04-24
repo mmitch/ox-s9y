@@ -1,8 +1,6 @@
-* headline 1
-
 introduction paragraph
 
-** plain *bold* /italic/ _underline_ +strike+                        :detail:
+* plain *bold* /italic/ _underline_ +strike+                         :detail:
 parapgraph =one=
 
 #+BEGIN_SRC shell
@@ -10,8 +8,7 @@ parapgraph =one=
 echo formatted code
 #+END_SRC
 
-parapgraph =two=
+paragraph =two=
+* END :detail:
 
-* headline 2
-
-final paragraph
+footer paragraph

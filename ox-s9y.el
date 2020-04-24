@@ -246,16 +246,19 @@ INFO is a plist used as a communication channel."
   "Transcode HEADLINE element from Org to Serendipity.
 CONTENTS is the headline contents.  INFO is a plist used as
 a communication channel."
-  (let ((title (org-export-data (org-element-property :title headline) info))
-	(level (org-export-get-relative-level headline info))
-	(is-detail (and (plist-get info :with-tags)
-			(seq-contains (org-export-get-tags headline info) "detail")))
-	(is-footnotes (org-element-property :footnote-section-p headline)))
+  (let* ((title (org-export-data (org-element-property :title headline) info))
+	 (level (org-export-get-relative-level headline info))
+	 (is-detail (and (plist-get info :with-tags)
+			 (seq-contains (org-export-get-tags headline info) "detail")))
+	 (is-skip (string= "END" title))
+	 (is-footnotes (org-element-property :footnote-section-p headline)))
     (cond
-     (is-detail (let ((summary (if title
-				   (concat (org-s9y--put-in-tag "summary" title) "\n")
-				 "")))
-		  (org-s9y--put-in-tag "detail" (concat "\n" summary contents))))
+     (is-detail (if is-skip
+		    contents
+		  (let ((summary (if title
+				     (concat (org-s9y--put-in-tag "summary" title) "\n")
+				   "")))
+		    (org-s9y--put-in-tag "detail" (concat "\n" summary contents)))))
      (is-footnotes "")
      (t (concat
 	 (if (<= level 2)

@@ -1,0 +1,14 @@
+<p>preface</p>
+
+<detail>
+<summary>outer</summary>
+<p>text 1</p>
+
+<detail>
+<summary>inner</summary>
+<p><strong>inner</strong> <code>text</code></p>
+</detail>
+<p>text 2</p>
+</detail>
+
+<p>footer</p>
