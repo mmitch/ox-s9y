@@ -59,3 +59,17 @@ an HTML =<blockquote>= tag.
 
 #+INCLUDE: "testing/test-quote-block.output" src html
 
+* entities
+
+Use =\ast{}= to export verbatim asterisks when =*= would activate bold
+formatting.
+
+Other [[https://orgmode.org/manual/Special-Symbols.html][Org entities]] should also work.
+
+** input
+
+#+INCLUDE: "testing/test-entity.input" src org
+
+** output
+
+#+INCLUDE: "testing/test-entity.output" src html
