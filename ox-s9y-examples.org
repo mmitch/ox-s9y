@@ -8,6 +8,25 @@ _underline_ as well as sections and headlines should work out of the box.
 Unimplemented element types should throw an error pointing to their
 missing implementation.
 
+* headlines
+
+Because Serendipity uses the first two headline levels for itself
+(title of blog and title of article), the blog entry can only use
+level three and lower headlines for subsections.
+
+I usually simply use =* blog= as the first level headline and the
+article title on the second level.  Both headlines are exported as an
+HTML comment so I can copy the article title over to the title text
+field in the Serendipity editor.
+
+** input
+
+#+INCLUDE: "testing/test-headline-lv4-as-h4.input" src org
+
+** output
+
+#+INCLUDE: "testing/test-headline-lv4-as-h4.output" src html
+
 * source code blocks
 
 Source code using =#+BEGIN_SRC= / =#+END_SRC= will be rendered as a

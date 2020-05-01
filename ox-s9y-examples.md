@@ -1,20 +1,23 @@
-- [basic formatting](#org1113888)
-- [source code blocks](#org1e7cb4e)
-  - [input](#orgf9379aa)
-  - [output](#org832557e)
-- [foldable `<details>` blocks](#orgf4f5d89)
-  - [input](#org1a2b587)
-  - [output](#orgeb38ebf)
-- [block quotes](#org7aa5ed4)
-  - [input](#org8e5bb50)
-  - [output](#orgaf083cd)
-- [entities](#orgf42c5b2)
-  - [input](#orge21c41f)
-  - [output](#org9bb6463)
+- [basic formatting](#org6e5e6b1)
+- [headlines](#orga4247d9)
+  - [input](#org899ec1e)
+  - [output](#orgc453e52)
+- [source code blocks](#orgc39965f)
+  - [input](#org247ace8)
+  - [output](#orgc12926f)
+- [foldable `<details>` blocks](#orge86027c)
+  - [input](#org17fba1d)
+  - [output](#org20bbd71)
+- [block quotes](#org5c39bd9)
+  - [input](#org705fc37)
+  - [output](#org312b4fa)
+- [entities](#orgd49a55b)
+  - [input](#org9eac4ac)
+  - [output](#org05f7dbc)
 
 
 
-<a id="org1113888"></a>
+<a id="org6e5e6b1"></a>
 
 # basic formatting
 
@@ -23,7 +26,40 @@ Most normal Org formatting like **bold** `code` *italic* ~~striketrough~~ <span 
 Unimplemented element types should throw an error pointing to their missing implementation.
 
 
-<a id="org1e7cb4e"></a>
+<a id="orga4247d9"></a>
+
+# headlines
+
+Because Serendipity uses the first two headline levels for itself (title of blog and title of article), the blog entry can only use level three and lower headings for subsections.
+
+I usually simply use `* blog` as a first level headline and the article title as a second level. Both headlines are exported as an HTML comment so I can cut'n'paste the article title over to the title text field in the Serendipity editor.
+
+
+<a id="org899ec1e"></a>
+
+## input
+
+```org
+* dummy
+** dummy
+*** dummy
+**** TOPIC
+```
+
+
+<a id="orgc453e52"></a>
+
+## output
+
+```html
+<!--  dummy  -->
+<!--  dummy  -->
+<h3>dummy</h3>
+<h4>TOPIC</h4>
+```
+
+
+<a id="orgc39965f"></a>
 
 # source code blocks
 
@@ -32,7 +68,7 @@ Source code using `#+BEGIN_SRC` / `#+END_SRC` will be rendered as a `[geshi]` co
 The source language will be copied to the geshi tag. Some mappings are needed, see `(org-s9y--map-to-geshi-language)` and expand accordingly if you miss anything.
 
 
-<a id="orgf9379aa"></a>
+<a id="org247ace8"></a>
 
 ## input
 
@@ -44,7 +80,7 @@ package foo;
 ```
 
 
-<a id="org832557e"></a>
+<a id="orgc12926f"></a>
 
 ## output
 
@@ -54,7 +90,7 @@ package foo;
 ```
 
 
-<a id="orgf4f5d89"></a>
+<a id="orge86027c"></a>
 
 # foldable `<details>` blocks
 
@@ -65,7 +101,7 @@ Use a headline tagged with `:details:` to generate a foldable HTML `<details>` b
 The `<details>` block will end at the next headline of the same or higher level. To end the block early, insert a special headline with the title `END` (also tagged as `:details:`). While this will end the `<details>` block, the `END` headline will not show up in the output.
 
 
-<a id="org1a2b587"></a>
+<a id="org17fba1d"></a>
 
 ## input
 
@@ -87,7 +123,7 @@ footer paragraph
 ```
 
 
-<a id="orgeb38ebf"></a>
+<a id="org20bbd71"></a>
 
 ## output
 
@@ -107,14 +143,14 @@ echo formatted code[/geshi]
 ```
 
 
-<a id="org7aa5ed4"></a>
+<a id="org5c39bd9"></a>
 
 # block quotes
 
 Quote blocks using `#+BEGIN_QUOTE` / `#+END_QUOTE` will be rendered as an HTML `<blockquote>` tag.
 
 
-<a id="org8e5bb50"></a>
+<a id="org705fc37"></a>
 
 ## input
 
@@ -127,7 +163,7 @@ this.
 ```
 
 
-<a id="orgaf083cd"></a>
+<a id="org312b4fa"></a>
 
 ## output
 
@@ -139,7 +175,7 @@ this.
 ```
 
 
-<a id="orgf42c5b2"></a>
+<a id="orgd49a55b"></a>
 
 # entities
 
@@ -148,7 +184,7 @@ Use `\ast{}` to export verbatim asterisks when `*` would activate bold formattin
 Other [Org entities](https://orgmode.org/manual/Special-Symbols.html) should also work.
 
 
-<a id="orge21c41f"></a>
+<a id="org9eac4ac"></a>
 
 ## input
 
@@ -157,7 +193,7 @@ This is *bold* and this is in \ast{}asterisks\ast{}.
 ```
 
 
-<a id="org9bb6463"></a>
+<a id="org05f7dbc"></a>
 
 ## output
 
