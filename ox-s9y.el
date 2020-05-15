@@ -135,7 +135,7 @@ this the hard way."
 	(t "plaintext")))
 
 (defun org-s9y--put-a-href (contents href &optional class id)
-  "Puts the CONTENTS inside a simple <a> tag pointing to HREF.
+  "Put CONTENTS inside a simple <a> tag pointing to HREF.
 Automagically escapes the target URL.  An optional CLASS and ID can be
 set on the <a> tag."
   (let* ((target (org-s9y--fix-url (url-encode-url (org-link-unescape href))))
