@@ -146,6 +146,26 @@ set on the <a> tag."
 	(setq attributes (append attributes (list (list "id" id))))))
     (org-s9y--put-in-tag "a" contents attributes)))
 
+(defun org-s9y--apply-regexp-list (regexps text)
+  "Apply the list of REGEXPS to TEXT."
+  (if regexps
+      (let* ((head (car regexps))
+	     (tail (cdr regexps))
+	     (regexp (car  head))
+	     (rep    (cadr head)))
+	(replace-regexp-in-string regexp rep
+				  (org-s9y--apply-regexp-list tail text)
+				  nil 'literal))
+    text))
+
+(defun org-s9y--quote-html (text)
+  "Quote HTML entities in TEXT."
+  (org-s9y--apply-regexp-list (list (list "<"  "&lt;")
+				    (list ">"  "&gt;")
+				    (list "\"" "&quot;")
+				    (list "&"  "&amp;"))
+			      text))
+
 (defun org-s9y--remove-leading-newline (text)
   "Remove a leading empty line from TEXT."
   (replace-regexp-in-string "\\`\n" "" text))
@@ -165,7 +185,7 @@ CONTENTS is the bold text, as a string.  INFO is
 (defun org-s9y-code (code _contents _info)
   "Transcode a CODE element from Org to Serendipity.
 CONTENTS is nil.  INFO is a plist used as a communication channel."
-  (org-s9y--put-in-tag "code" (org-element-property :value code)))
+  (org-s9y--put-in-tag "code" (org-s9y--quote-html (org-element-property :value code))))
 
 (defun org-s9y-entity (entity _contents _info)
   "Transcode an ENTITY element from Org to Serendipity.

@@ -1,0 +1,3 @@
+HTML ~</a href="bar">~
+
+C ~#define and(a,b) a&b~

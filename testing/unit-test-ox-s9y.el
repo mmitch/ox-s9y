@@ -66,6 +66,28 @@
   (should (equal (org-s9y--put-a-href "some text" "https://example.com/" "myclass" "myid")
 		 "<a href=\"https://example.com/\" class=\"myclass\" id=\"myid\">some text</a>")))
 
+;;; org-s9y--quote-html
+
+(ert-deftest org-s9y/quote-html/plain-text ()
+  (should (equal (org-s9y--quote-html "hello world")
+		 "hello world")))
+
+(ert-deftest org-s9y/quote-html/tag ()
+  (should (equal (org-s9y--quote-html "<a>")
+		 "&lt;a&gt;")))
+
+(ert-deftest org-s9y/quote-html/amp ()
+  (should (equal (org-s9y--quote-html "me&you")
+		 "me&amp;you")))
+
+(ert-deftest org-s9y/quote-html/quot ()
+  (should (equal (org-s9y--quote-html "$a=\"foo\";")
+		 "$a=&quot;foo&quot;;")))
+
+(ert-deftest org-s9y/quote-html/mixed ()
+  (should (equal (org-s9y--quote-html "<a href=\"/rest/api?count=10&skip=30\">more</a>")
+		 "&lt;a href=&quot;/rest/api?count=10&amp;skip=30&quot;&gt;more&lt;/a&gt;")))
+
 ;;; org-s9y--remove-leading-newline
 
 (ert-deftest org-s9y/remove-leading-newline/remove ()
