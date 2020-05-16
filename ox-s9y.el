@@ -417,7 +417,7 @@ CONTENTS is the underlined text, as a string.  INFO is
 (defun org-s9y-verbatim (verbatim _contents _info)
   "Transcode a VERBATIM element from Org to Serendipity.
 CONTENTS is nil.  INFO is a plist used as a communication channel."
-  (org-s9y--put-in-tag "code" (org-element-property :value verbatim)))
+  (org-s9y--put-in-tag "code" (org-s9y--quote-html (org-element-property :value verbatim))))
 
 ;;; Export methods
 
