@@ -92,3 +92,23 @@ Other [[https://orgmode.org/manual/Special-Symbols.html][Org entities]] should a
 ** output
 
 #+INCLUDE: "testing/test-entity.output" src html
+
+* dangling links
+
+To refer to a future blog article that has not yet been written, add a
+link with =todo:some text= as the link target.  This will generate an
+=<abbr>= tag showing the given text as a hover text instead of a
+regular =<a>= link.
+
+If you leave out =some text= and just use =todo:= as a link target, a
+default text will be supplied.  This text can be customized
+via =M-x customize-variable org-s9y-todo-link-title=.
+
+** input
+
+#+INCLUDE: "testing/test-link-todo-with-text.input" src org
+
+** output
+
+#+INCLUDE: "testing/test-link-todo-with-text.output" src html
+
