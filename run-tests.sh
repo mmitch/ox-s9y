@@ -72,9 +72,15 @@ for INPUT in testing/test-*.input; do
     OUTPUT="${TEST}.html"
 
     echo -n "running $TEST "
-    emacs -Q --batch "${LIBS[@]}" "$INPUT" -f org-version -f org-s9y-export-to-html > "$TEMPFILE" 2>&1
-    if diff --color=always -b -Narup "$EXPECTED" "$OUTPUT" >> "$TEMPFILE"; then
-	echo "${GREEN}OK${RESET}"
+    if emacs -Q --batch "${LIBS[@]}" "$INPUT" -f org-version -f org-s9y-export-to-html > "$TEMPFILE" 2>&1; then
+	if diff --color=always -b -Narup "$EXPECTED" "$OUTPUT" >> "$TEMPFILE"; then
+	    echo "${GREEN}OK${RESET}"
+	else
+	    echo "${RED}${BOLD}FAILED${RESET}${YELLOW}"
+	    cat "$TEMPFILE"
+	    echo "${RESET}"
+	    FAILED=$(( FAILED + 1))
+	fi
     else
 	echo "${RED}${BOLD}FAILED${RESET}${YELLOW}"
 	cat "$TEMPFILE"
