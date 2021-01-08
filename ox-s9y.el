@@ -28,10 +28,12 @@
 ;;; Code:
 
 (require 'ox)
+(require 'ox-html)
 
 ;;; Backend definition
 
-(org-export-define-backend 's9y
+(org-export-define-derived-backend 's9y 'html
+  :translate-alist
   '((bold . org-s9y-bold)
     (center-block . org-s9y-undefined)
     (clock . org-s9y-undefined)
