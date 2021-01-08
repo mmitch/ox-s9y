@@ -35,54 +35,28 @@
 (org-export-define-derived-backend 's9y 'html
   :translate-alist
   '((bold . org-s9y-bold)
-    (center-block . org-s9y-undefined)
-    (clock . org-s9y-undefined)
     (code . org-s9y-code)
-    (drawer . org-s9y-undefined)
-    (dynamic-block . org-s9y-undefined)
     (entity . org-s9y-entity)
-    (example-block . org-s9y-undefined)
-    (export-block . org-s9y-undefined)
-    (export-snippet . org-s9y-undefined)
     (fixed-width . org-s9y-fixed-width)
     (footnote-definition . org-s9y-footnote-definition)
     (footnote-reference . org-s9y-footnote-reference)
     (headline . org-s9y-headline)
-    (horizontal-rule . org-s9y-undefined)
-    (inline-src-block . org-s9y-undefined)
-    (inlinetask . org-s9y-undefined)
     (inner-template . org-s9y-inner-template)
     (italic . org-s9y-italic)
     (item . org-s9y-item)
     (keyword . org-s9y-keyword)
-    (latex-environment . org-s9y-undefined)
-    (latex-fragment . org-s9y-undefined)
     (line-break . org-s9y-line-break)
     (link . org-s9y-link)
-    (node-property . org-s9y-undefined)
     (paragraph . org-s9y-paragraph)
     (plain-list . org-s9y-plain-list)
     (plain-text . org-s9y-plain-text)
-    (planning . org-s9y-undefined)
-    (property-drawer . org-s9y-undefined)
     (quote-block . org-s9y-quote-block)
-    (radio-target . org-s9y-undefined)
     (section . org-s9y-section)
-    (special-block . org-s9y-undefined)
     (src-block . org-s9y-geshi-block)
-    (statistics-cookie . org-s9y-undefined)
     (strike-through . org-s9y-strike-through)
-    (subscript . org-s9y-undefined)
-    (superscript . org-s9y-undefined)
-    (table . org-s9y-undefined)
-    (table-cell . org-s9y-undefined)
-    (table-row . org-s9y-undefined)
-    (target . org-s9y-undefined)
     (template . org-s9y-template)
-    (timestamp . org-s9y-undefined)
     (underline . org-s9y-underline)
-    (verbatim . org-s9y-verbatim)
-    (verse-block . org-s9y-undefined))
+    (verbatim . org-s9y-verbatim))
   :menu-entry
   '(?S "Export to Serendipity"
        ((?H "As HTML buffer" org-s9y-export-as-html)
@@ -411,13 +385,6 @@ CONTENTS is the text with strike-through markup, as a string.
 CONTENTS is the transcoded contents string.  INFO is a plist
 holding export options."
   contents)
-
-(defun org-s9y-undefined (element &optional contents _info)
-  "Throw an error when an unsupported ELEMENT is encountered.
-Show the CONTENTS for easier location of the problem."
-  (error "ELEMENT type `%s' not implemented yet (contents: `%s')"
-	 (car element)
-	 (or contents "?")))
 
 (defun org-s9y-underline (_underline contents _info)
   "Transcode a UNDERLINE element from Org to Serendipity.
