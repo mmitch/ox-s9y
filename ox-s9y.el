@@ -36,7 +36,6 @@
   :translate-alist
   '((bold . org-s9y-bold)
     (code . org-s9y-code)
-    (entity . org-s9y-entity)
     (fixed-width . org-s9y-fixed-width)
     (footnote-definition . org-s9y-footnote-definition)
     (footnote-reference . org-s9y-footnote-reference)
@@ -162,12 +161,6 @@ CONTENTS is the bold text, as a string.  INFO is
   "Transcode a CODE element from Org to Serendipity.
 CONTENTS is nil.  INFO is a plist used as a communication channel."
   (org-s9y--put-in-tag "code" (org-s9y--quote-html (org-element-property :value code))))
-
-(defun org-s9y-entity (entity _contents _info)
-  "Transcode an ENTITY element from Org to Serendipity.
-CONTENTS is the definition itself.  INFO is a plist used as a
-communication channel."
-  (org-element-property :html entity))
 
 (defun org-s9y-geshi-block (code-block _contents info)
   "Transcode a CODE-BLOCK element from Org to Serendipity GeSHi plugin.
