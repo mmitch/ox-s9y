@@ -43,7 +43,6 @@
     (inner-template . org-s9y-inner-template)
     (italic . org-s9y-italic)
     (item . org-s9y-item)
-    (keyword . org-s9y-keyword)
     (line-break . org-s9y-line-break)
     (link . org-s9y-link)
     (paragraph . org-s9y-paragraph)
@@ -292,12 +291,6 @@ CONTENTS is the contents of the item, as a string.  INFO is
        (_
 	(org-s9y--put-in-tag "li" (org-trim contents) value)))
      "\n")))
-
-(defun org-s9y-keyword (_keyword _contents _info)
-  "Transcode a KEYWORD element from Org to Serendipity.
-Completely skips the keywords for now."
-  "")
-
 
 (defun org-s9y-line-break (_line-break _contents _info)
   "Transcode a LINE-BREAK object from Org to Serendipity.
