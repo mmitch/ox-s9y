@@ -30,6 +30,14 @@
 ;;;;; helper functions
 ;;;;;
 
+(defun test-org-s9y-verbatim-regression ()
+  "Return t if verbatim blocks generate an extra newline.
+This is a possible regression in Org introduced with 7d9e4da447
+which was released with Org 9.1.14.  See
+https://lists.gnu.org/archive/html/emacs-orgmode/2021-01/msg00338.html
+for details."
+  (not (version< (org-release) "9.1.14")))
+
 (defun test-org-s9y-export (input)
   "Transform INPUT to Serendipity HTML and return the result."
   (with-temp-buffer
@@ -275,13 +283,22 @@ content
 :   indented verbatim line
 
 paragraph 2")
-		 "<p>paragraph 1</p>
+		 (if (test-org-s9y-verbatim-regression)
+		     "<p>paragraph 1</p>
+
+[geshi lang=plaintext]verbatim line
+  indented verbatim line[/geshi]
+
+
+<p>paragraph 2</p>
+"
+		   "<p>paragraph 1</p>
 
 [geshi lang=plaintext]verbatim line
   indented verbatim line[/geshi]
 
 <p>paragraph 2</p>
-")))
+"))))
 
 (ert-deftest org-s9y/export-footnote-concat ()
   (should (equal (test-org-s9y-export "# multiple footnotes at the same location are delimited by \", \"
