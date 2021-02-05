@@ -16,11 +16,8 @@ jobs:
           name: Byte compilation
           command: emacs -Q --batch -f batch-byte-compile ox-s9y.el
       - run:
-          name: Unit tests
-          command: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/unit-test-ox-s9y.el -f ert-run-tests-batch-and-exit
-      - run:
-          name: Integration tests
-          command: ./run-tests.sh ox-s9y.el
+          name: Tests
+          command: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/test-ox-s9y.el -f ert-run-tests-batch-and-exit
 
   emacs_25:
     docker:
@@ -37,11 +34,8 @@ jobs:
           name: Byte compilation
           command: emacs -Q --batch -f batch-byte-compile ox-s9y.el
       - run:
-          name: Unit tests
-          command: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/unit-test-ox-s9y.el -f ert-run-tests-batch-and-exit
-      - run:
-          name: Integration tests
-          command: ./run-tests.sh ox-s9y.el
+          name: Tests
+          command: emacs -Q --batch -l ert -l ox-s9y.elc -l testing/test-ox-s9y.el -f ert-run-tests-batch-and-exit
 
 workflows:
   version: 2

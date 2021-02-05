@@ -1,6 +1,6 @@
 # Makefile for ox-s9y
 #
-# Copyright (C) 2017, 2018  Christian Garbs <mitch@cgarbs.de>
+# Copyright (C) 2017-2021  Christian Garbs <mitch@cgarbs.de>
 # Licensed under GNU GPL v3 or later.
 #
 # This file is part of ox-s9y.
@@ -20,30 +20,24 @@
 
 SOURCES=$(wildcard *.el)
 TARGETS=$(addsuffix c,$(SOURCES))
-UNITTESTS=$(basename $(wildcard testing/unit-test-*.el))
-TESTS=$(basename $(wildcard testing/unit-test-*.el))
+TESTS=$(basename $(wildcard testing/test-*.el))
 
 EMACS=emacs -Q --batch
 
 %.elc: %.el
 	$(EMACS) -f batch-byte-compile $<
 
-testing/unit-test-%: %.elc testing/unit-test-%.el
+testing/test-%: %.elc testing/test-%.el
 	$(EMACS) -l ert -l $< -l $@.el -f ert-run-tests-batch-and-exit
 
 all:	compile test
 
 compile: $(TARGETS)
 
-test: show-org-version unit-test integration-test
+test: show-org-version $(TESTS)
 
 show-org-version:
 	$(EMACS) -f org-version
-
-unit-test: $(UNITTESTS)
-
-integration-test: $(TARGETS)
-	./run-tests.sh $<
 
 clean:
 	rm -f *.elc
