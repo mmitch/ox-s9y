@@ -57,9 +57,9 @@
     (verbatim . org-s9y-verbatim))
   :menu-entry
   '(?S "Export to Serendipity"
-       ((?H "As HTML buffer" org-s9y-export-as-html)
-	(?h "As HTML file" org-s9y-export-to-html)
-	(?c "As HTML to clipboard" org-s9y-export-to-kill-ring)))
+       ((?h "As HTML buffer" org-s9y-export-as-html)
+	(?f "As HTML file" org-s9y-export-to-html)
+	(?H "As HTML buffer and to clipboard" org-s9y-export-to-kill-ring)))
 
 ;;; Customization
 
@@ -459,7 +459,7 @@ Return output file's name."
 ;;;###autoload
 (defun org-s9y-export-to-kill-ring
   (&optional async subtreep visible-only body-only ext-plist)
-  "Export current buffer as Serendipity HTML to kill ring.
+  "Export current buffer as Serendipity HTML to buffer and kill ring.
 
 If narrowing is active in the current buffer, only export its
 narrowed part.
