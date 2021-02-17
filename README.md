@@ -15,8 +15,6 @@ todo
 ----
 
 - fix handling of multiple paragraphs inside of list-items (see ox-html)
-- export directly to X clipboard (export to buffer, select all, copy to
-  clipboard, close buffer)
 
 done
 ----
@@ -26,6 +24,7 @@ done
 - restrict export to the contents of the `<body>` tag
 - map Org languages to GeSHi languages
 - support offsets and jumps in ordered lists
+- export directly to X clipboard
 
 resources
 ---------
