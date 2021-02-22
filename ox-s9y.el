@@ -36,7 +36,7 @@
 ;;; Backend definition
 
 					; internal reminder: for Org format information see
-					; http://orgmode.org/worg/dev/org-element-api.html
+					; https://orgmode.org/worg/dev/org-element-api.html
 
 (org-export-define-derived-backend 's9y 'html
   :translate-alist
