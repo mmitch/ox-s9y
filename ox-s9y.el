@@ -293,8 +293,7 @@ CONTENTS is the contents of the item, as a string.  INFO is
 	  (concat
 	   (ox-s9y--put-in-tag "dt" (org-trim term))
 	   "\n"
-	   (ox-s9y--put-in-tag "dd" (org-trim contents))
-	   ))
+	   (ox-s9y--put-in-tag "dd" (org-trim contents))))
 	 (_
 	  (ox-s9y--put-in-tag "li" (org-trim contents) value)))
        "\n")))
