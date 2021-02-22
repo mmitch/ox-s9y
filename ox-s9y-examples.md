@@ -68,7 +68,7 @@ I usually simply use `* blog` as the first level headline and the article title 
 
 Source code using `#+BEGIN_SRC` / `#+END_SRC` will be rendered as a `[geshi]` code block.
 
-The source language will be copied to the geshi tag. Some mappings are needed, see `(org-s9y--map-to-geshi-language)` and expand accordingly if you miss anything.
+The source language will be copied to the geshi tag. Some mappings are needed, see `(ox-s9y--map-to-geshi-language)` and expand accordingly if you miss anything.
 
 
 <a id="org1835d7c"></a>
@@ -211,7 +211,7 @@ This is *bold* and this is in \ast{}asterisks\ast{}.
 
 To refer to a future blog article that has not yet been written, add a link with `todo:some text` as the link target. This will generate an `<abbr>` tag showing the given text as a hover text instead of a regular `<a>` link.
 
-If you leave out `some text` and just use `todo:` as a link target, a default text will be supplied. This text can be customized via `M-x customize-variable org-s9y-todo-link-title`.
+If you leave out `some text` and just use `todo:` as a link target, a default text will be supplied. This text can be customized via `M-x customize-variable ox-s9y-todo-link-title`.
 
 
 <a id="org51acf8c"></a>

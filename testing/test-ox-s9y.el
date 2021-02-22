@@ -30,7 +30,7 @@
 ;;;;; helper functions
 ;;;;;
 
-(defun test-org-s9y-verbatim-regression ()
+(defun test-ox-s9y-verbatim-regression ()
   "Return t if verbatim blocks generate an extra newline.
 This is a possible regression in Org introduced with 7d9e4da447
 which was released with Org 9.1.14.  See
@@ -38,12 +38,12 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2021-01/msg00338.html
 for details."
   (not (version< (org-release) "9.1.14")))
 
-(defun test-org-s9y-export (input)
+(defun test-ox-s9y-export (input)
   "Transform INPUT to Serendipity HTML and return the result."
   (with-temp-buffer
     (org-mode)
     (insert input)
-    (org-s9y-export-as-html)
+    (ox-s9y-export-as-html)
     (with-current-buffer "*Org S9Y Export*"
       (buffer-substring-no-properties (point-min) (point-max)))))
 
@@ -51,138 +51,138 @@ for details."
 ;;;;; tests of internal methods
 ;;;;;
 
-;;; org-s9y--put-in-tag
+;;; ox-s9y--put-in-tag
 
-(ert-deftest org-s9y/put-in-tag/no-attribute ()
-  (should (equal (org-s9y--put-in-tag "p" "foo")
+(ert-deftest test-ox-s9y/put-in-tag/no-attribute ()
+  (should (equal (ox-s9y--put-in-tag "p" "foo")
 		 "<p>foo</p>")))
 
-(ert-deftest org-s9y/put-in-tag/single-attribute ()
-  (should (equal (org-s9y--put-in-tag "a" "foo" '(("href" "file.htm")))
+(ert-deftest test-ox-s9y/put-in-tag/single-attribute ()
+  (should (equal (ox-s9y--put-in-tag "a" "foo" '(("href" "file.htm")))
 		 "<a href=\"file.htm\">foo</a>")))
 
-(ert-deftest org-s9y/put-in-tag/multiple-attributes ()
-  (should (equal (org-s9y--put-in-tag "div" "foo" '(("class" "bar") ("style" "margin: 0;")))
+(ert-deftest test-ox-s9y/put-in-tag/multiple-attributes ()
+  (should (equal (ox-s9y--put-in-tag "div" "foo" '(("class" "bar") ("style" "margin: 0;")))
 		 "<div class=\"bar\" style=\"margin: 0;\">foo</div>")))
 
-;;; org-s9y--put-a-href
+;;; ox-s9y--put-a-href
 
-(ert-deftest org-s9y/put-a-href/plain ()
-  (should (equal (org-s9y--put-a-href "some text" "https://example.com/")
+(ert-deftest test-ox-s9y/put-a-href/plain ()
+  (should (equal (ox-s9y--put-a-href "some text" "https://example.com/")
 		 "<a href=\"https://example.com/\">some text</a>")))
 
-(ert-deftest org-s9y/put-a-href/anchor ()
-  (should (equal (org-s9y--put-a-href "anchor text" "#anchor")
+(ert-deftest test-ox-s9y/put-a-href/anchor ()
+  (should (equal (ox-s9y--put-a-href "anchor text" "#anchor")
 		 "<a href=\"#anchor\">anchor text</a>")))
 
-(ert-deftest org-s9y/put-a-href/encode-url-only-once ()
-  (should (equal (org-s9y--put-a-href "baz" "http://foo/%20bar")
+(ert-deftest test-ox-s9y/put-a-href/encode-url-only-once ()
+  (should (equal (ox-s9y--put-a-href "baz" "http://foo/%20bar")
 		 "<a href=\"http://foo/%20bar\">baz</a>")))
 
-(ert-deftest org-s9y/put-a-href/with-class ()
-  (should (equal (org-s9y--put-a-href "some text" "https://example.com/" "myclass")
+(ert-deftest test-ox-s9y/put-a-href/with-class ()
+  (should (equal (ox-s9y--put-a-href "some text" "https://example.com/" "myclass")
 		 "<a href=\"https://example.com/\" class=\"myclass\">some text</a>")))
 
-(ert-deftest org-s9y/put-a-href/with-id ()
-  (should (equal (org-s9y--put-a-href "some text" "https://example.com/" "myclass" "myid")
+(ert-deftest test-ox-s9y/put-a-href/with-id ()
+  (should (equal (ox-s9y--put-a-href "some text" "https://example.com/" "myclass" "myid")
 		 "<a href=\"https://example.com/\" class=\"myclass\" id=\"myid\">some text</a>")))
 
-;;; org-s9y--quote-html
+;;; ox-s9y--quote-html
 
-(ert-deftest org-s9y/quote-html/plain-text ()
-  (should (equal (org-s9y--quote-html "hello world")
+(ert-deftest test-ox-s9y/quote-html/plain-text ()
+  (should (equal (ox-s9y--quote-html "hello world")
 		 "hello world")))
 
-(ert-deftest org-s9y/quote-html/tag ()
-  (should (equal (org-s9y--quote-html "<a>")
+(ert-deftest test-ox-s9y/quote-html/tag ()
+  (should (equal (ox-s9y--quote-html "<a>")
 		 "&lt;a&gt;")))
 
-(ert-deftest org-s9y/quote-html/amp ()
-  (should (equal (org-s9y--quote-html "me&you")
+(ert-deftest test-ox-s9y/quote-html/amp ()
+  (should (equal (ox-s9y--quote-html "me&you")
 		 "me&amp;you")))
 
-(ert-deftest org-s9y/quote-html/quot ()
-  (should (equal (org-s9y--quote-html "$a=\"foo\";")
+(ert-deftest test-ox-s9y/quote-html/quot ()
+  (should (equal (ox-s9y--quote-html "$a=\"foo\";")
 		 "$a=&quot;foo&quot;;")))
 
-(ert-deftest org-s9y/quote-html/mixed ()
-  (should (equal (org-s9y--quote-html "<a href=\"/rest/api?count=10&skip=30\">more</a>")
+(ert-deftest test-ox-s9y/quote-html/mixed ()
+  (should (equal (ox-s9y--quote-html "<a href=\"/rest/api?count=10&skip=30\">more</a>")
 		 "&lt;a href=&quot;/rest/api?count=10&amp;skip=30&quot;&gt;more&lt;/a&gt;")))
 
-;;; org-s9y--remove-leading-newline
+;;; ox-s9y--remove-leading-newline
 
-(ert-deftest org-s9y/remove-leading-newline/remove ()
-  (should (equal( org-s9y--remove-leading-newline "\nsome text")
+(ert-deftest test-ox-s9y/remove-leading-newline/remove ()
+  (should (equal( ox-s9y--remove-leading-newline "\nsome text")
 		"some text")))
 
-(ert-deftest org-s9y/remove-leading-newline/keep-text-before-first-newline ()
-  (should (equal( org-s9y--remove-leading-newline "no empty line\nsome more text\n")
+(ert-deftest test-ox-s9y/remove-leading-newline/keep-text-before-first-newline ()
+  (should (equal( ox-s9y--remove-leading-newline "no empty line\nsome more text\n")
 		"no empty line\nsome more text\n")))
 
-(ert-deftest org-s9y/remove-leading-newline/only-remove-first-newline ()
-  (should (equal( org-s9y--remove-leading-newline "\n\nsome text")
+(ert-deftest test-ox-s9y/remove-leading-newline/only-remove-first-newline ()
+  (should (equal( ox-s9y--remove-leading-newline "\n\nsome text")
 		"\nsome text")))
 
-(ert-deftest org-s9y/remove-leading-newline/keep-newlines-within ()
-  (should (equal( org-s9y--remove-leading-newline "\nline 1\nline 2")
+(ert-deftest test-ox-s9y/remove-leading-newline/keep-newlines-within ()
+  (should (equal( ox-s9y--remove-leading-newline "\nline 1\nline 2")
 		"line 1\nline 2")))
 
-(ert-deftest org-s9y/remove-leading-newline/dont-fail-with-no-newline ()
-  (should (equal( org-s9y--remove-leading-newline "some text")
+(ert-deftest test-ox-s9y/remove-leading-newline/dont-fail-with-no-newline ()
+  (should (equal( ox-s9y--remove-leading-newline "some text")
 		"some text")))
 
-;;; org-s9y--remove-trailing-newline
+;;; ox-s9y--remove-trailing-newline
 
-(ert-deftest org-s9y/remove-trailing-newline/remove ()
-  (should (equal( org-s9y--remove-trailing-newline "some text\n")
+(ert-deftest test-ox-s9y/remove-trailing-newline/remove ()
+  (should (equal( ox-s9y--remove-trailing-newline "some text\n")
 		"some text")))
 
-(ert-deftest org-s9y/remove-trailing-newline/keep-text-after-last-newline ()
-  (should (equal( org-s9y--remove-trailing-newline "some text\nno empty line")
+(ert-deftest test-ox-s9y/remove-trailing-newline/keep-text-after-last-newline ()
+  (should (equal( ox-s9y--remove-trailing-newline "some text\nno empty line")
 		"some text\nno empty line")))
 
-(ert-deftest org-s9y/remove-trailing-newline/only-remove-last-newline ()
-  (should (equal( org-s9y--remove-trailing-newline "some text\n\n")
+(ert-deftest test-ox-s9y/remove-trailing-newline/only-remove-last-newline ()
+  (should (equal( ox-s9y--remove-trailing-newline "some text\n\n")
 		"some text\n")))
 
-(ert-deftest org-s9y/remove-trailing-newline/keep-newlines-within ()
-  (should (equal( org-s9y--remove-trailing-newline "line 1\nline 2\n")
+(ert-deftest test-ox-s9y/remove-trailing-newline/keep-newlines-within ()
+  (should (equal( ox-s9y--remove-trailing-newline "line 1\nline 2\n")
 		"line 1\nline 2")))
 
-(ert-deftest org-s9y/remove-trailing-newline/dont-fail-with-no-newline ()
-  (should (equal( org-s9y--remove-trailing-newline "some text")
+(ert-deftest test-ox-s9y/remove-trailing-newline/dont-fail-with-no-newline ()
+  (should (equal( ox-s9y--remove-trailing-newline "some text")
 		"some text")))
 
-;;; org- org-s9y--map-to-geshi-language
+;;; org- ox-s9y--map-to-geshi-language
 
-(ert-deftest org-s9y/map-to-geshi-language/unchanged ()
-  (should (equal( org-s9y--map-to-geshi-language "java")
+(ert-deftest test-ox-s9y/map-to-geshi-language/unchanged ()
+  (should (equal( ox-s9y--map-to-geshi-language "java")
 		"java")))
 
-(ert-deftest org-s9y/map-to-geshi-language/changed ()
-  (should (equal( org-s9y--map-to-geshi-language "elisp")
+(ert-deftest test-ox-s9y/map-to-geshi-language/changed ()
+  (should (equal( ox-s9y--map-to-geshi-language "elisp")
 		"lisp")))
 
-(ert-deftest org-s9y/map-to-geshi-language/nil ()
-  (should (equal( org-s9y--map-to-geshi-language nil)
+(ert-deftest test-ox-s9y/map-to-geshi-language/nil ()
+  (should (equal( ox-s9y--map-to-geshi-language nil)
 		"plaintext")))
 
-(ert-deftest org-s9y/map-to-geshi-language/empty ()
-  (should (equal( org-s9y--map-to-geshi-language "")
+(ert-deftest test-ox-s9y/map-to-geshi-language/empty ()
+  (should (equal( ox-s9y--map-to-geshi-language "")
 		"plaintext")))
 
 ;;;;;
 ;;;;; whole-file export tests
 ;;;;;
 
-(ert-deftest org-s9y/export-bold ()
-  (should (equal (test-org-s9y-export "foo *BAR* baz
+(ert-deftest test-ox-s9y/export-bold ()
+  (should (equal (test-ox-s9y-export "foo *BAR* baz
 ")
 		 "<p>foo <strong>BAR</strong> baz</p>
 ")))
 
-(ert-deftest org-s9y/export-code-html-entities ()
-  (should (equal (test-org-s9y-export "HTML ~</a href=\"bar\">~
+(ert-deftest test-ox-s9y/export-code-html-entities ()
+  (should (equal (test-ox-s9y-export "HTML ~</a href=\"bar\">~
 
 C ~#define and(a,b) a&b~
 ")
@@ -191,14 +191,14 @@ C ~#define and(a,b) a&b~
 <p>C <code>#define and(a,b) a&amp;b</code></p>
 ")))
 
-(ert-deftest org-s9y/export-code-plain ()
-  (should (equal (test-org-s9y-export "foo ~BAR~ baz
+(ert-deftest test-ox-s9y/export-code-plain ()
+  (should (equal (test-ox-s9y-export "foo ~BAR~ baz
 ")
 		 "<p>foo <code>BAR</code> baz</p>
 ")))
 
-(ert-deftest org-s9y/export-details-complex ()
-  (should (equal (test-org-s9y-export "introduction paragraph
+(ert-deftest test-ox-s9y/export-details-complex ()
+  (should (equal (test-ox-s9y-export "introduction paragraph
 
 * plain *bold* /italic/ _underline_ +strike+                        :details:
 paragraph =one=
@@ -227,8 +227,8 @@ echo formatted code[/geshi]
 <p>footer paragraph</p>
 ")))
 
-(ert-deftest org-s9y/export-details-nested ()
-  (should (equal (test-org-s9y-export "preface
+(ert-deftest test-ox-s9y/export-details-nested ()
+  (should (equal (test-ox-s9y-export "preface
 
 * outer                                                             :details:
 
@@ -260,8 +260,8 @@ footer
 <p>footer</p>
 ")))
 
-(ert-deftest org-s9y/export-details-plain ()
-  (should (equal (test-org-s9y-export "* title                                                             :details:
+(ert-deftest test-ox-s9y/export-details-plain ()
+  (should (equal (test-ox-s9y-export "* title                                                             :details:
 content
 ")
 		 "<details>
@@ -270,20 +270,20 @@ content
 </details>
 ")))
 
-(ert-deftest org-s9y/export-entity ()
-  (should (equal (test-org-s9y-export "This is *bold* and this is in \\ast{}asterisks\\ast{}.
+(ert-deftest test-ox-s9y/export-entity ()
+  (should (equal (test-ox-s9y-export "This is *bold* and this is in \\ast{}asterisks\\ast{}.
 ")
 		 "<p>This is <strong>bold</strong> and this is in &lowast;asterisks&lowast;.</p>
 ")))
 
-(ert-deftest org-s9y/export-fixed-width ()
-  (should (equal (test-org-s9y-export "paragraph 1
+(ert-deftest test-ox-s9y/export-fixed-width ()
+  (should (equal (test-ox-s9y-export "paragraph 1
 
 : verbatim line
 :   indented verbatim line
 
 paragraph 2")
-		 (if (test-org-s9y-verbatim-regression)
+		 (if (test-ox-s9y-verbatim-regression)
 		     "<p>paragraph 1</p>
 
 [geshi lang=plaintext]verbatim line
@@ -300,8 +300,8 @@ paragraph 2")
 <p>paragraph 2</p>
 "))))
 
-(ert-deftest org-s9y/export-footnote-concat ()
-  (should (equal (test-org-s9y-export "# multiple footnotes at the same location are delimited by \", \"
+(ert-deftest test-ox-s9y/export-footnote-concat ()
+  (should (equal (test-ox-s9y-export "# multiple footnotes at the same location are delimited by \", \"
 foo[fn:1][fn:2]
 
 * Footnotes
@@ -313,8 +313,8 @@ foo[fn:1][fn:2]
 <div id=\"footnotes\"><div class=\"footnote\" id=\"fn-to-1\"><a href=\"#fn-from-1\">[1]</a>: foo</div>
 <div class=\"footnote\" id=\"fn-to-2\"><a href=\"#fn-from-2\">[2]</a>: bar</div></div>")))
 
-(ert-deftest org-s9y/export-footnote-id-on-first ()
-  (should (equal (test-org-s9y-export "# only the first reference of a footnote gets the <a id=\"…\"> backlink.
+(ert-deftest test-ox-s9y/export-footnote-id-on-first ()
+  (should (equal (test-ox-s9y-export "# only the first reference of a footnote gets the <a id=\"…\"> backlink.
 foo[fn:1]bar[fn:1]
 * Footnotes
 
@@ -324,8 +324,8 @@ foo[fn:1]bar[fn:1]
 		 "<p>foo<sup><a href=\"#fn-to-1\" class=\"footnote\" id=\"fn-from-1\">[1]</a></sup>bar<sup><a href=\"#fn-to-1\" class=\"footnote\">[1]</a></sup></p>
 <div id=\"footnotes\"><div class=\"footnote\" id=\"fn-to-1\"><a href=\"#fn-from-1\">[1]</a>: foo</div></div>")))
 
-(ert-deftest org-s9y/export-footnote-multiple ()
-  (should (equal (test-org-s9y-export "foo[fn:1] bar[fn:2]
+(ert-deftest test-ox-s9y/export-footnote-multiple ()
+  (should (equal (test-ox-s9y-export "foo[fn:1] bar[fn:2]
 * Footnotes
 
 [fn:1] foo
@@ -335,8 +335,8 @@ foo[fn:1]bar[fn:1]
 <div id=\"footnotes\"><div class=\"footnote\" id=\"fn-to-1\"><a href=\"#fn-from-1\">[1]</a>: foo</div>
 <div class=\"footnote\" id=\"fn-to-2\"><a href=\"#fn-from-2\">[2]</a>: bar</div></div>")))
 
-(ert-deftest org-s9y/export-footnote-plain ()
-  (should (equal (test-org-s9y-export "bar[fn:1]
+(ert-deftest test-ox-s9y/export-footnote-plain ()
+  (should (equal (test-ox-s9y-export "bar[fn:1]
 * Footnotes
 
 [fn:1] foo
@@ -344,8 +344,8 @@ foo[fn:1]bar[fn:1]
 		 "<p>bar<sup><a href=\"#fn-to-1\" class=\"footnote\" id=\"fn-from-1\">[1]</a></sup></p>
 <div id=\"footnotes\"><div class=\"footnote\" id=\"fn-to-1\"><a href=\"#fn-from-1\">[1]</a>: foo</div></div>")))
 
-(ert-deftest org-s9y/export-geshi-block-without-language ()
-  (should (equal (test-org-s9y-export "#+BEGIN_SRC
+(ert-deftest test-ox-s9y/export-geshi-block-without-language ()
+  (should (equal (test-ox-s9y-export "#+BEGIN_SRC
 package foo;
 /* dummy dummy */
 #+END_SRC
@@ -354,8 +354,8 @@ package foo;
 /* dummy dummy */[/geshi]
 ")))
 
-(ert-deftest org-s9y/export-geshi-block ()
-  (should (equal (test-org-s9y-export "#+BEGIN_SRC java
+(ert-deftest test-ox-s9y/export-geshi-block ()
+  (should (equal (test-ox-s9y-export "#+BEGIN_SRC java
 package foo;
 /* dummy dummy */
 #+END_SRC
@@ -364,22 +364,22 @@ package foo;
 /* dummy dummy */[/geshi]
 ")))
 
-(ert-deftest org-s9y/export-headline-lv1-as-comment ()
-  (should (equal (test-org-s9y-export "* TOPIC
+(ert-deftest test-ox-s9y/export-headline-lv1-as-comment ()
+  (should (equal (test-ox-s9y-export "* TOPIC
 ")
 		 "<!--  TOPIC  -->
 ")))
 
-(ert-deftest org-s9y/export-headline-lv2-as-comment ()
-  (should (equal (test-org-s9y-export "* dummy
+(ert-deftest test-ox-s9y/export-headline-lv2-as-comment ()
+  (should (equal (test-ox-s9y-export "* dummy
 ** TOPIC
 ")
 		 "<!--  dummy  -->
 <!--  TOPIC  -->
 ")))
 
-(ert-deftest org-s9y/export-headline-lv3-as-h3 ()
-  (should (equal (test-org-s9y-export "* dummy
+(ert-deftest test-ox-s9y/export-headline-lv3-as-h3 ()
+  (should (equal (test-ox-s9y-export "* dummy
 ** dummy
 *** TOPIC
 ")
@@ -388,8 +388,8 @@ package foo;
 <h3>TOPIC</h3>
 ")))
 
-(ert-deftest org-s9y/export-headline-lv4-as-h4 ()
-  (should (equal (test-org-s9y-export "* dummy
+(ert-deftest test-ox-s9y/export-headline-lv4-as-h4 ()
+  (should (equal (test-ox-s9y-export "* dummy
 ** dummy
 *** dummy
 **** TOPIC
@@ -400,8 +400,8 @@ package foo;
 <h4>TOPIC</h4>
 ")))
 
-(ert-deftest org-s9y/export-headline-lv5-as-h5 ()
-  (should (equal (test-org-s9y-export "* dummy
+(ert-deftest test-ox-s9y/export-headline-lv5-as-h5 ()
+  (should (equal (test-ox-s9y-export "* dummy
 ** dummy
 *** dummy
 **** dummy
@@ -414,80 +414,80 @@ package foo;
 <h5>TOPIC</h5>
 ")))
 
-(ert-deftest org-s9y/export-italic ()
-  (should (equal (test-org-s9y-export "foo /BAR/ baz
+(ert-deftest test-ox-s9y/export-italic ()
+  (should (equal (test-ox-s9y-export "foo /BAR/ baz
 ")
 		 "<p>foo <em>BAR</em> baz</p>
 ")))
 
-(ert-deftest org-s9y/export-keyword-skip ()
-  (should (equal (test-org-s9y-export "#+OPTIONS: ^:nil
+(ert-deftest test-ox-s9y/export-keyword-skip ()
+  (should (equal (test-ox-s9y-export "#+OPTIONS: ^:nil
 
 nothing special, just this text
 ")
 		 "<p>nothing special, just this text</p>
 ")))
 
-(ert-deftest org-s9y/export-line-break ()
-  (should (equal (test-org-s9y-export "foo\\\\
+(ert-deftest test-ox-s9y/export-line-break ()
+  (should (equal (test-ox-s9y-export "foo\\\\
 bar
 ")
 		 "<p>foo<br>
 bar</p>
 ")))
 
-(ert-deftest org-s9y/export-link-about ()
-  (should (equal (test-org-s9y-export "[[about:config][bar]]
+(ert-deftest test-ox-s9y/export-link-about ()
+  (should (equal (test-ox-s9y-export "[[about:config][bar]]
 ")
 		 "<p><a href=\"about:config\">bar</a></p>
 ")))
 
-(ert-deftest org-s9y/export-link-encode-url-only-once ()
-  (should (equal (test-org-s9y-export "[[http://foo/%20bar][baz]]
+(ert-deftest test-ox-s9y/export-link-encode-url-only-once ()
+  (should (equal (test-ox-s9y-export "[[http://foo/%20bar][baz]]
 ")
 		 "<p><a href=\"http://foo/%20bar\">baz</a></p>
 ")))
 
-(ert-deftest org-s9y/export-link-encode-url ()
-  (should (equal (test-org-s9y-export "[[http://foo/ bar][baz]]
+(ert-deftest test-ox-s9y/export-link-encode-url ()
+  (should (equal (test-ox-s9y-export "[[http://foo/ bar][baz]]
 ")
 		 "<p><a href=\"http://foo/%20bar\">baz</a></p>
 ")))
 
-(ert-deftest org-s9y/export-link-http ()
-  (should (equal (test-org-s9y-export "[[http://foo/][bar]]
+(ert-deftest test-ox-s9y/export-link-http ()
+  (should (equal (test-ox-s9y-export "[[http://foo/][bar]]
 ")
 		 "<p><a href=\"http://foo/\">bar</a></p>
 ")))
 
-(ert-deftest org-s9y/export-link-https ()
-  (should (equal (test-org-s9y-export "[[https://foo/][bar]]
+(ert-deftest test-ox-s9y/export-link-https ()
+  (should (equal (test-ox-s9y-export "[[https://foo/][bar]]
 ")
 		 "<p><a href=\"https://foo/\">bar</a></p>
 ")))
 
-(ert-deftest org-s9y/export-link-todo-with-text ()
-  (should (equal (test-org-s9y-export "[[todo:Show this text][bar]]
+(ert-deftest test-ox-s9y/export-link-todo-with-text ()
+  (should (equal (test-ox-s9y-export "[[todo:Show this text][bar]]
 ")
 		 "<p><abbr title=\"Show this text\">bar</abbr></p>
 ")))
 
-(ert-deftest org-s9y/export-link-todo-without-text ()
-  (should (equal (test-org-s9y-export "[[todo:][bar]]
+(ert-deftest test-ox-s9y/export-link-todo-without-text ()
+  (should (equal (test-ox-s9y-export "[[todo:][bar]]
 ")
 		 "<p><abbr title=\"Artikel folgt\">bar</abbr></p>
 ")))
 
-(ert-deftest org-s9y/export-multiline-paragraph ()
-  (should (equal (test-org-s9y-export "foo
+(ert-deftest test-ox-s9y/export-multiline-paragraph ()
+  (should (equal (test-ox-s9y-export "foo
 bar
 ")
 		 "<p>foo
 bar</p>
 ")))
 
-(ert-deftest org-s9y/export-multiple-paragraphs ()
-  (should (equal (test-org-s9y-export "foo
+(ert-deftest test-ox-s9y/export-multiple-paragraphs ()
+  (should (equal (test-ox-s9y-export "foo
 
 bar
 ")
@@ -496,8 +496,8 @@ bar
 <p>bar</p>
 ")))
 
-(ert-deftest org-s9y/export-plain-list-descriptive ()
-  (should (equal (test-org-s9y-export "- foo :: pokey
+(ert-deftest test-ox-s9y/export-plain-list-descriptive ()
+  (should (equal (test-ox-s9y-export "- foo :: pokey
 - bar :: hokey
 ")
 		 "<dl><dt>foo</dt>
@@ -506,8 +506,8 @@ bar
 <dd>hokey</dd></dl>
 ")))
 
-(ert-deftest org-s9y/export-plain-list-ordered-start ()
-  (should (equal (test-org-s9y-export "1. foo
+(ert-deftest test-ox-s9y/export-plain-list-ordered-start ()
+  (should (equal (test-ox-s9y-export "1. foo
 
 Hello
 
@@ -522,24 +522,24 @@ Hello
 <li>baz</li></ol>
 ")))
 
-(ert-deftest org-s9y/export-plain-list-ordered ()
-  (should (equal (test-org-s9y-export "1. foo
+(ert-deftest test-ox-s9y/export-plain-list-ordered ()
+  (should (equal (test-ox-s9y-export "1. foo
 2. bar
 ")
 		 "<ol><li>foo</li>
 <li>bar</li></ol>
 ")))
 
-(ert-deftest org-s9y/export-plain-list-unordered ()
-  (should (equal (test-org-s9y-export "- foo
+(ert-deftest test-ox-s9y/export-plain-list-unordered ()
+  (should (equal (test-ox-s9y-export "- foo
 - bar
 ")
 		 "<ul><li>foo</li>
 <li>bar</li></ul>
 ")))
 
-(ert-deftest org-s9y/export-quote-block ()
-  (should (equal (test-org-s9y-export "#+BEGIN_QUOTE
+(ert-deftest test-ox-s9y/export-quote-block ()
+  (should (equal (test-ox-s9y-export "#+BEGIN_QUOTE
 Somebody
 said
 this.
@@ -551,32 +551,32 @@ this.
 </blockquote>
 ")))
 
-(ert-deftest org-s9y/export-single-paragraph ()
-  (should (equal (test-org-s9y-export "foo
+(ert-deftest test-ox-s9y/export-single-paragraph ()
+  (should (equal (test-ox-s9y-export "foo
 ")
 		 "<p>foo</p>
 ")))
 
-(ert-deftest org-s9y/export-strike-through ()
-  (should (equal (test-org-s9y-export "foo +BAR+ baz
+(ert-deftest test-ox-s9y/export-strike-through ()
+  (should (equal (test-ox-s9y-export "foo +BAR+ baz
 ")
 		 "<p>foo <s>BAR</s> baz</p>
 ")))
 
-(ert-deftest org-s9y/export-underline ()
-  (should (equal (test-org-s9y-export "foo _BAR_ baz
+(ert-deftest test-ox-s9y/export-underline ()
+  (should (equal (test-ox-s9y-export "foo _BAR_ baz
 ")
 		 "<p>foo <u>BAR</u> baz</p>
 ")))
 
-(ert-deftest org-s9y/export-verbatim-html-entities ()
-  (should (equal (test-org-s9y-export "HTML special characters =<>\"&=
+(ert-deftest test-ox-s9y/export-verbatim-html-entities ()
+  (should (equal (test-ox-s9y-export "HTML special characters =<>\"&=
 ")
 		 "<p>HTML special characters <code>&lt;&gt;&quot;&amp;</code></p>
 ")))
 
-(ert-deftest org-s9y/export-verbatim-plain ()
-  (should (equal (test-org-s9y-export "foo =BAR= baz
+(ert-deftest test-ox-s9y/export-verbatim-plain ()
+  (should (equal (test-ox-s9y-export "foo =BAR= baz
 ")
 		 "<p>foo <code>BAR</code> baz</p>
 ")))
