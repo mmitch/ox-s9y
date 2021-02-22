@@ -231,7 +231,7 @@ INFO is a plist used as a communication channel."
 	   (fn-alist
 	    (cl-loop for (n _label raw) in fn-alist collect
 		     (cons n (org-trim (org-export-data raw info)))))
-	   (text (mapconcat 'ox-s9y-format-footnote-definition fn-alist "\n")))
+	   (text (mapconcat #'ox-s9y-format-footnote-definition fn-alist "\n")))
       (if fn-alist
 	  (ox-s9y--put-in-tag "div" text '((id footnotes)))
 	"")))
