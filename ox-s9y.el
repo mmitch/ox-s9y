@@ -189,7 +189,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     "Transcode a FOOTNOTE-REFERENCE element from Org to Serendipity.
 CONTENTS is nil.  INFO is a plist holding contextual information."
     (if (eq (org-element-property :type footnote-reference) 'inline)
-	(error "Inline footnotes not supported yet")
+	(user-error "Inline footnotes not supported yet")
       (concat
        ;; Insert separator between two footnotes in a row.
        (let ((prev (org-export-get-previous-element footnote-reference info)))
@@ -322,10 +322,10 @@ CONTENTS is the contents of the link, as a string.  INFO is
 	    (ox-s9y--put-in-tag "abbr" contents (list (list "title" title)))))
 	 ((string-prefix-p "about:" raw)
 	  (ox-s9y--put-a-href contents raw))
-	 (t (error "Unknown fuzzy LINK type encountered: `%s'" raw))))
+	 (t (user-error "Unknown fuzzy LINK type encountered: `%s'" raw))))
        ((member type '("http" "https"))
 	(ox-s9y--put-a-href contents (concat type ":" path)))
-       (t (error "LINK type `%s' not yet supported" type)))))
+       (t (user-error "LINK type `%s' not yet supported" type)))))
 
   (defun ox-s9y-paragraph (paragraph contents _info)
     "Transcode a PARAGRAPH element from Org to Serendipity.
@@ -347,7 +347,7 @@ CONTENTS is the contents of the plain-list, as a string.  INFO is
 	 (`descriptive (ox-s9y--put-in-tag "dl" (org-trim contents)))
 	 (`unordered (ox-s9y--put-in-tag "ul" (org-trim contents)))
 	 (`ordered (ox-s9y--put-in-tag "ol" (org-trim contents)))
-	 (other (error "PLAIN-LIST type `%s' not yet supported" other)))
+	 (other (user-error "PLAIN-LIST type `%s' not yet supported" other)))
        "\n")))
 
   (defun ox-s9y-plain-text (text _info)
