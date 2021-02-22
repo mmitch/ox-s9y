@@ -18,12 +18,15 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with ox-s9y.  If not, see <http://www.gnu.org/licenses/>.
 
+;; Author: Christian Garbs <mitch@cgarbs.de>
+;; URL: https://github.com/mmitch/ox-s9y
+;; Keywords: bbcode, org, export, outlines
+;; Version: 0.0.1
+;; Package-Requires: ((emacs "24.4") (org "8.0"))
+
 ;;; Commentary:
 
 ;; export Org documents to Serendipity blog
-
-; internal reminder: for Org format information see
-; http://orgmode.org/worg/dev/org-element-api.html
 
 ;;; Code:
 
@@ -31,6 +34,9 @@
 (require 'ox-html)
 
 ;;; Backend definition
+
+; internal reminder: for Org format information see
+; http://orgmode.org/worg/dev/org-element-api.html
 
 (org-export-define-derived-backend 's9y 'html
   :translate-alist
