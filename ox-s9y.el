@@ -1,6 +1,6 @@
 ;;; ox-s9y.el --- Serendipity HTML Back-End for Org Export Engine -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2017-2021  Christian Garbs <mitch@cgarbs.de>
+;; Copyright (C) 2017-2021,2023  Christian Garbs <mitch@cgarbs.de>
 ;; Licensed under GNU GPL v3 or later.
 
 ;; This file is part of ox-s9y.
@@ -324,6 +324,8 @@ CONTENTS is the contents of the link, as a string.  INFO is
 	 (t (user-error "Unknown fuzzy LINK type encountered: `%s'" raw))))
        ((member type '("http" "https"))
 	(ox-s9y--put-a-href contents (concat type ":" path)))
+       ((string= type "news")
+	(ox-s9y--put-a-href contents raw))
        (t (user-error "LINK type `%s' not yet supported" type)))))
 
   (defun ox-s9y-paragraph (paragraph contents _info)

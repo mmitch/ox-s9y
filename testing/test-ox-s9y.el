@@ -1,6 +1,6 @@
 ;;; test-ox-s9y.el --- Tests Serendipity HTML Back-End for Org Export Engine -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2017-2021  Christian Garbs <mitch@cgarbs.de>
+;; Copyright (C) 2017-2021,2023  Christian Garbs <mitch@cgarbs.de>
 ;; Licensed under GNU GPL v3 or later.
 
 ;; This file is part of ox-s9y.
@@ -464,6 +464,12 @@ bar</p>
   (should (equal (test-ox-s9y-export "[[https://foo/][bar]]
 ")
 		 "<p><a href=\"https://foo/\">bar</a></p>
+")))
+
+(ert-deftest test-ox-s9y/export-link-news ()
+  (should (equal (test-ox-s9y-export "[[news:de.test][test group]]
+")
+		 "<p><a href=\"news:de.test\">test group</a></p>
 ")))
 
 (ert-deftest test-ox-s9y/export-link-todo-with-text ()
